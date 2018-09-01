@@ -27,7 +27,7 @@ export default {
   methods: {
     fetchData() {
       axios
-        .get('https://kiosk4pckisz-api.herokuapp.com/api')
+        .get('https://kiosk4pckisz-api.herokuapp.com/api/')
         .then((response) => {
           this.movies = response.data.movies.map(movie => Movie.fromJson(movie));
           this.shows = response.data.screenings.map(show => Show.fromJson(show));
