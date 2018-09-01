@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-light">
+  <div class="home bg-light">
     <div class="container">
       <div
         v-if="currentShow || nextShow"
@@ -39,10 +39,8 @@
           </router-link>
         </div>
         <div class="col">
-          <router-link to="/">
-            <button
-              class="btn btn-lg btn-primary"
-              disabled>
+          <router-link to="/repertoire">
+            <button class="btn btn-lg btn-primary">
               <span class="icon"><font-awesome-icon icon="film"/></span>
               <br>
               Repertuar Kina
@@ -156,6 +154,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.home {
+  padding-top: 10rem;
+}
+.alert {
+  position: fixed;
+  width: 80%;
+  left: 10%;
+  top: 2rem;
+}
+img {
+  margin: 2rem 0;
+}
 .row {
   padding: 0.5rem 0;
 }

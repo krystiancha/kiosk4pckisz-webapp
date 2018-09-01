@@ -37,6 +37,9 @@ export default {
       this.shows = this.shows;
     },
   },
+  onIdle() {
+    this.$router.push('/');
+  },
 };
 </script>
 
