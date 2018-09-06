@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class Movie {
   static fromJson(obj) {
     const movie = new Movie();
@@ -5,7 +7,7 @@ export default class Movie {
     ['id', 'title', 'description', 'poster', 'production', 'genre']
       .forEach((field) => { movie[field] = obj[field]; });
 
-    movie.duration = new Date(obj.duration);
+    movie.duration = `${moment.duration(obj.duration).asMinutes()} min`;
 
     return movie;
   }

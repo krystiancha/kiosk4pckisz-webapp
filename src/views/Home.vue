@@ -6,11 +6,11 @@
         class="alert alert-info"
       >
         <span v-if="currentShow">
-          Aktualny seans to <span class="alert-link">{{ currentShow.movieObj.title }}</span>.
+          Aktualny seans to <span class="alert-link">{{ currentShow.movie.title }}</span>.
         </span>
         <span v-if="nextShow">
           Następny <span v-if="!currentShow">seans</span> {{ nextShowTime }}
-          ({{ timeToNextShow }}): <span class="alert-link">{{ nextShow.movieObj.title }}</span>.
+          ({{ timeToNextShow }}): <span class="alert-link">{{ nextShow.movie.title }}</span>.
         </span>
       </div>
       <img
@@ -120,17 +120,12 @@ export default {
       nextShow: undefined,
       timeToNextShow: '',
       nextShowTime: '',
+      tickInterval: -1,
     };
   },
   watch: {
-    currentShow(val) {
-      if (this.movies.length > 0 && val) {
-        val.fillInMovie(this.movies);
-      }
-    },
     nextShow(val) {
       if (this.movies.length > 0 && val) {
-        val.fillInMovie(this.movies);
         const format = moment().isSame(val.start, 'day') ? '[o] H:mm' : 'Do MMM [o] H:mm';
         this.nextShowTime = moment(val.start).format(format);
       }
@@ -138,7 +133,10 @@ export default {
   },
   mounted() {
     this.tick();
-    setInterval(this.tick, 1000);
+    this.tickInterval = setInterval(this.tick, 1000);
+  },
+  deactivated() {
+    clearInterval(this.tickInterval);
   },
   methods: {
     tick() {

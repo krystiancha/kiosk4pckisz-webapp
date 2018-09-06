@@ -2,16 +2,14 @@ export default class Show {
   static fromJson(obj) {
     const show = new Show();
 
-    ['id', 'movie', 'meeting', 'premiere']
+    ['id', 'movie']
       .forEach((field) => { show[field] = obj[field]; });
 
     show.start = new Date(obj.start);
     show.end = new Date(obj.end);
 
-    return show;
-  }
+    show.timeleft = '';
 
-  fillInMovie(movies) {
-    this.movieObj = movies.find(movie => movie.id === this.movie);
+    return show;
   }
 }

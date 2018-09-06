@@ -27,14 +27,31 @@ export default {
   methods: {
     fetchData() {
       axios
-        .get('https://kiosk4pckisz-api.herokuapp.com/api/')
+        .get('http://localhost:8000')
         .then((response) => {
           this.movies = response.data.movies.map(movie => Movie.fromJson(movie));
-          this.shows = response.data.screenings.map(show => Show.fromJson(show));
+          this.shows = response.data.shows.map(show => Show.fromJson(show));
+          this.scheduleRemovePastShows();
         });
     },
-    updateData() {
-      this.shows = this.shows;
+    scheduleRemovePastShows() {
+      if (this.shows.length > 0) {
+        setTimeout(this.removePastShows, this.shows[0].end - new Date());
+      }
+    },
+    removePastShows() {
+      const now = new Date();
+      let toRemove = 0;
+      this.shows.some((show) => {
+        if (show.end <= now) {
+          toRemove += 1;
+          return false;
+        }
+        return true;
+      });
+      this.shows.splice(0, toRemove);
+
+      this.scheduleRemovePastShows();
     },
   },
   onIdle() {
