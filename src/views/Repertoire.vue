@@ -17,6 +17,7 @@
           <div class="list-group list-group-flush">
             <div
               v-for="show in filteredShowsToday"
+              :key="show.id"
               class="list-group-item"
             >
               <div class="row">
@@ -41,6 +42,7 @@
           <div class="list-group list-group-flush">
             <div
               v-for="show in filteredShowsLater"
+              :key="show.id"
               class="list-group-item">
               <div class="row">
                 <div class="col-3">
@@ -70,6 +72,7 @@
         >
         <div
           v-for="movie in filteredMovies"
+          :key="movie.id"
           class="card mb-3">
           <div class="card-body">
             <div class="row">
@@ -83,17 +86,17 @@
               <div class="col-7">
                 <h5 class="card-title">{{ movie.title }} </h5>
                 <span class="mr-3 badge badge-secondary">
-              <span class="icon"><font-awesome-icon icon="globe-americas"/></span>
-              {{ movie.production }}
-            </span>
+                  <span class="icon"><font-awesome-icon icon="globe-americas"/></span>
+                  {{ movie.production }}
+                </span>
                 <span class="mr-3 badge badge-secondary">
-              <span class="icon"><font-awesome-icon icon="list"/></span>
-              {{ movie.genre }}
-            </span>
+                  <span class="icon"><font-awesome-icon icon="list"/></span>
+                  {{ movie.genre }}
+                </span>
                 <span class="mr-3 badge badge-secondary">
-              <span class="icon"><font-awesome-icon icon="stopwatch"/></span>
-              {{ movie.duration }}
-            </span>
+                  <span class="icon"><font-awesome-icon icon="stopwatch"/></span>
+                  {{ movie.duration }}
+                </span>
                 <p class="card-text my-3">{{ movie.description }}</p>
                 <button
                   type="button"
@@ -109,10 +112,6 @@
       </div>
     </div>
   </div>
-
-
-
-
 </template>
 
 <script>
@@ -144,10 +143,12 @@ export default {
       if (this.showsSearch) {
         return this.showsToday.filter(show =>
           show.movie.title
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
             .search(this.showsSearch
-              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
               .toLowerCase()) !== -1);
       }
       return this.showsToday;
@@ -156,10 +157,12 @@ export default {
       if (this.showsSearch) {
         return this.showsLater.filter(show =>
           show.movie.title
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
             .search(this.showsSearch
-              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
               .toLowerCase()) !== -1);
       }
       return this.showsLater;
@@ -168,10 +171,12 @@ export default {
       if (this.movieSearch) {
         return this.movies.filter(movie =>
           movie.title
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
             .search(this.movieSearch
-              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
               .toLowerCase()) !== -1);
       }
       return this.movies;
@@ -195,7 +200,8 @@ export default {
     computeTodayLater() {
       let showsLaterStart = 0;
       this.shows.some((show) => {
-        if (moment().isSame(show.start, 'day')) {
+        if (moment()
+          .isSame(show.start, 'day')) {
           showsLaterStart += 1;
           return false;
         }
@@ -206,12 +212,14 @@ export default {
     },
     formatTime(time, format) {
       if (format) {
-        return moment(time).format(format);
+        return moment(time)
+          .format(format);
       }
       if (time <= new Date()) {
         return 'trwa';
       }
-      return moment(time).fromNow();
+      return moment(time)
+        .fromNow();
     },
     updateTimeleft() {
       this.showsToday.forEach((show, idx) => {
@@ -230,16 +238,16 @@ export default {
   overflow-y: scroll;
 }
 /*.row, .col {*/
-  /*height: 100%;*/
+/*height: 100%;*/
 /*}*/
 /*.container-fluid > .row > .col {*/
-  /*overflow-y: scroll;*/
+/*overflow-y: scroll;*/
 /*}*/
 /*.card {*/
-  /*width: 100%;*/
-  /*margin: 1rem 0;*/
+/*width: 100%;*/
+/*margin: 1rem 0;*/
 /*}*/
 /*.icon {*/
-  /*margin-right: 0.25rem;*/
+/*margin-right: 0.25rem;*/
 /*}*/
 </style>
