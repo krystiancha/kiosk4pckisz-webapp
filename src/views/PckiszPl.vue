@@ -1,5 +1,8 @@
 <template>
-  <iframe :src="`http://pckisz.pl/${$route.params.path}`"/>
+  <iframe
+    :src="`http://pckisz.pl/${$route.params.path}`"
+    class="flex-grow-1"
+  />
 </template>
 
 <script>
@@ -10,8 +13,7 @@ export default {
 
 <style scoped lang="scss">
 iframe {
-  width: 100%;
-  height: 100%;
   border: none;
+  background-color: #e8e8e8;
 }
 </style>

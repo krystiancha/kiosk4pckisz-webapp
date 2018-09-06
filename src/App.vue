@@ -1,8 +1,17 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    class="d-flex flex-column w-100 h-100">
+
+    <nav class="navbar navbar-dark bg-dark">
+      <a
+        class="navbar-brand"
+        href="#">Navbar</a>
+    </nav>
+
     <router-view
       :movies="movies"
-      :shows="shows" />
+      :shows="shows"/>
   </div>
 </template>
 
@@ -61,8 +70,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#app {
-  width: 100%;
-  height: 100%;
+.navbar {
+  min-height: 3rem;
+  height: 3rem;
 }
 </style>

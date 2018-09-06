@@ -1,13 +1,13 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
+  <div class="repertoire d-flex">
+    <div class="container-fluid d-flex">
+      <div class="p-3 w-50 pt-4 column">
         <h3>Seanse</h3>
         <hr>
         <input
           v-model="showsSearch"
           type="text"
-          class="form-control"
+          class="form-control mb-3"
           placeholder="Szukaj..."
         >
         <div
@@ -59,18 +59,18 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="p-3 w-50 pt-4 column">
         <h3>Filmy</h3>
         <hr>
         <input
           v-model="movieSearch"
           type="text"
-          class="form-control"
+          class="form-control mb-3"
           placeholder="Szukaj..."
         >
         <div
           v-for="movie in filteredMovies"
-          class="card">
+          class="card mb-3">
           <div class="card-body">
             <div class="row">
               <div class="col-5">
@@ -83,17 +83,17 @@
               <div class="col-7">
                 <h5 class="card-title">{{ movie.title }} </h5>
                 <span class="mr-3 badge badge-secondary">
-                  <span class="icon"><font-awesome-icon icon="globe-americas"/></span>
-                  {{ movie.production }}
-                </span>
+              <span class="icon"><font-awesome-icon icon="globe-americas"/></span>
+              {{ movie.production }}
+            </span>
                 <span class="mr-3 badge badge-secondary">
-                  <span class="icon"><font-awesome-icon icon="list"/></span>
-                  {{ movie.genre }}
-                </span>
+              <span class="icon"><font-awesome-icon icon="list"/></span>
+              {{ movie.genre }}
+            </span>
                 <span class="mr-3 badge badge-secondary">
-                  <span class="icon"><font-awesome-icon icon="stopwatch"/></span>
-                  {{ movie.duration }}
-                </span>
+              <span class="icon"><font-awesome-icon icon="stopwatch"/></span>
+              {{ movie.duration }}
+            </span>
                 <p class="card-text my-3">{{ movie.description }}</p>
                 <button
                   type="button"
@@ -109,6 +109,10 @@
       </div>
     </div>
   </div>
+
+
+
+
 </template>
 
 <script>
@@ -219,17 +223,23 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid, .row, .col {
-  height: 100%;
+.repertoire, .container-fluid {
+  overflow: hidden;
 }
-.container-fluid > .row > .col {
+.column {
   overflow-y: scroll;
 }
-.card {
-  width: 100%;
-  margin: 1rem 0;
-}
-.icon {
-  margin-right: 0.25rem;
-}
+/*.row, .col {*/
+  /*height: 100%;*/
+/*}*/
+/*.container-fluid > .row > .col {*/
+  /*overflow-y: scroll;*/
+/*}*/
+/*.card {*/
+  /*width: 100%;*/
+  /*margin: 1rem 0;*/
+/*}*/
+/*.icon {*/
+  /*margin-right: 0.25rem;*/
+/*}*/
 </style>
