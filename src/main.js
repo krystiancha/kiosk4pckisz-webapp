@@ -23,7 +23,7 @@ import IdleVue from 'idle-vue';
 import App from './App.vue';
 import './main.scss';
 import router from './router';
-import './registerServiceWorker';
+// import './registerServiceWorker';
 
 library.add(
   faCamera, faFilm, faHandshake, faHourglassHalf, faInfoCircle, faNewspaper, faPaintBrush, faStar,
