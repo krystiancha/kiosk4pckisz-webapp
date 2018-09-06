@@ -4,12 +4,34 @@
       <div class="p-3 w-50 pt-4 column">
         <h3>Seanse</h3>
         <hr>
-        <input
-          v-model="showsSearch"
-          type="text"
-          class="form-control mb-3"
-          placeholder="Szukaj..."
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <span class="icon mr-2"><font-awesome-icon icon="search"/></span>
+            </span>
+          </div>
+          <input
+            v-model="showsSearch"
+            type="text"
+            class="form-control mb-3"
+            placeholder="Wpisz tytuł filmu"
+          >
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              @click="showsSearch = ''"
+            >
+              <span class="icon mr-1"><font-awesome-icon icon="times"/></span>
+            </button>
+          </div>
+        </div>
+        <h4
+          v-show="showsSearch"
+          class="text-info"
         >
+          Wyniki wyszukiwania:
+        </h4>
         <div
           v-if="filteredShowsToday.length > 0"
           class="card border-primary">
@@ -43,20 +65,24 @@
             <div
               v-for="show in filteredShowsLater"
               :key="show.id"
-              class="list-group-item">
-              <div class="row">
-                <div class="col-3">
-                  <font-awesome-icon icon="calendar"/>
-                  {{ formatTime(show.start, 'Do MMM') }}
-                </div>
-                <div class="col-2">
-                  <font-awesome-icon icon="clock"/>
-                  {{ formatTime(show.start, 'H:mm') }}
-                </div>
-                <div class="col-7">
-                  {{ show.movie.title }}
-                </div>
+              class="show list-group-item d-flex flex-row">
+              <div class="date">
+                <span class="icon text-muted"><font-awesome-icon icon="calendar"/></span>
+                {{ formatTime(show.start, 'Do MMM') }}
               </div>
+              <div class="time">
+                <span class="icon text-muted"><font-awesome-icon icon="clock"/></span>
+                {{ formatTime(show.start, 'H:mm') }}
+              </div>
+              <div class="title flex-grow-1">
+                <strong>{{ show.movie.title }}</strong>
+              </div>
+              <button
+                class="btn btn-outline-primary btn-sm align-self-center ml-1"
+                @click="movieSearch = show.movie.title"
+              >
+                <font-awesome-icon icon="arrow-right"/>
+              </button>
             </div>
           </div>
         </div>
@@ -64,12 +90,34 @@
       <div class="p-3 w-50 pt-4 column">
         <h3>Filmy</h3>
         <hr>
-        <input
-          v-model="movieSearch"
-          type="text"
-          class="form-control mb-3"
-          placeholder="Szukaj..."
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <span class="icon mr-2"><font-awesome-icon icon="search"/></span>
+            </span>
+          </div>
+          <input
+            v-model="movieSearch"
+            type="text"
+            class="form-control mb-3"
+            placeholder="Wpisz tytuł filmu"
+          >
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              @click="movieSearch = ''"
+            >
+              <span class="icon mr-1"><font-awesome-icon icon="times"/></span>
+            </button>
+          </div>
+        </div>
+        <h4
+          v-show="movieSearch"
+          class="text-info"
         >
+          Wyniki wyszukiwania:
+        </h4>
         <div
           v-for="movie in filteredMovies"
           :key="movie.id"
@@ -101,6 +149,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary"
+                  @click="showsSearch = movie.title"
                 >
                   <span class="icon"><font-awesome-icon icon="arrow-left"/></span>
                   Pokaż seanse
@@ -230,12 +279,25 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .repertoire, .container-fluid {
   overflow: hidden;
 }
 .column {
   overflow-y: scroll;
+}
+.show {
+  .date {
+    min-width: 6rem;
+    width: 6rem;
+  }
+  .time {
+    min-width: 6rem;
+    width: 6rem;
+  }
+  button {
+    height: 2rem;
+  }
 }
 /*.row, .col {*/
 /*height: 100%;*/
@@ -247,7 +309,7 @@ export default {
 /*width: 100%;*/
 /*margin: 1rem 0;*/
 /*}*/
-/*.icon {*/
-/*margin-right: 0.25rem;*/
-/*}*/
+.icon {
+  margin-right: 0.25rem;
+}
 </style>

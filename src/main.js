@@ -13,9 +13,12 @@ import {
   faList,
   faStopwatch,
   faArrowLeft,
+  faArrowRight,
   faCalendar,
   faClock,
   faEnvelope,
+  faSearch,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment';
@@ -28,8 +31,8 @@ import router from './router';
 library.add(
   faCamera, faFilm, faHandshake, faHourglassHalf, faInfoCircle, faNewspaper, faPaintBrush, faStar,
   faGlobeAmericas, faList, faStopwatch,
-  faArrowLeft, faCalendar, faClock,
-  faEnvelope,
+  faArrowLeft, faArrowRight, faCalendar, faClock,
+  faEnvelope, faSearch, faTimes,
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
