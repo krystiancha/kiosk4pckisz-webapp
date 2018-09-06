@@ -4,9 +4,28 @@
     class="d-flex flex-column w-100 h-100">
 
     <nav class="navbar navbar-dark bg-dark">
-      <a
-        class="navbar-brand"
-        href="#">Navbar</a>
+      <div
+        :class="{ hidden: $router.currentRoute.name === 'home' }"
+        class="navbar-text w-25"
+      >
+        <router-link
+          to="/"
+          class="btn btn-primary btn-lg"
+        >
+          <span class="icon mr-1"><font-awesome-icon icon="undo"/></span>
+          Wróć
+        </router-link>
+      </div>
+
+      <div
+        :class="{ hidden: $router.currentRoute.name === 'home' }"
+        class="navbar-text">
+        Powiatowe Centrum Kultury i Sztuki im. Marii Konopnickiej w Ciechanowie
+      </div>
+      <div class="navbar-text w-25 text-right">
+        <span class="mr-2">{{ currentTimeString.date }}</span>
+        <strong>{{ currentTimeString.time }}</strong>
+      </div>
     </nav>
 
     <router-view
@@ -19,6 +38,7 @@
 /* eslint-disable no-console */
 
 import axios from 'axios';
+import moment from 'moment';
 import Movie from './models/Movie';
 import Show from './models/Show';
 
@@ -28,10 +48,16 @@ export default {
     return {
       movies: [],
       shows: [],
+      currentTimeString: {
+        date: '',
+        time: '',
+      },
     };
   },
   mounted() {
     this.fetchData();
+    this.updateCurrentTimeString();
+    this.scheduleUpdateCurrentTimeString();
   },
   methods: {
     fetchData() {
@@ -62,6 +88,13 @@ export default {
 
       this.scheduleRemovePastShows();
     },
+    scheduleUpdateCurrentTimeString() {
+      setTimeout(this.updateCurrentTimeString, 60000);
+    },
+    updateCurrentTimeString() {
+      this.currentTimeString.date = moment().format('Do MMM');
+      this.currentTimeString.time = moment().format('H:mm');
+    },
   },
   onIdle() {
     this.$router.push('/');
@@ -71,7 +104,7 @@ export default {
 
 <style scoped lang="scss">
 .navbar {
-  min-height: 3rem;
-  height: 3rem;
+  min-height: 3.5rem;
+  height: 3.5rem;
 }
 </style>

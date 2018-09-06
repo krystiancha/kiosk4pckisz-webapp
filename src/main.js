@@ -19,6 +19,7 @@ import {
   faEnvelope,
   faSearch,
   faTimes,
+  faUndo,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment';
@@ -32,7 +33,7 @@ library.add(
   faCamera, faFilm, faHandshake, faHourglassHalf, faInfoCircle, faNewspaper, faPaintBrush, faStar,
   faGlobeAmericas, faList, faStopwatch,
   faArrowLeft, faArrowRight, faCalendar, faClock,
-  faEnvelope, faSearch, faTimes,
+  faEnvelope, faSearch, faTimes, faUndo,
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
