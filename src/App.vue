@@ -37,7 +37,7 @@
 <script>
 /* eslint-disable no-console */
 
-import axios from 'axios';
+import axios from '@/axios';
 import moment from 'moment';
 import Movie from './models/Movie';
 import Show from './models/Show';
@@ -62,7 +62,7 @@ export default {
   methods: {
     fetchData() {
       axios
-        .get('http://localhost:8000')
+        .get()
         .then((response) => {
           this.movies = response.data.movies.map(movie => Movie.fromJson(movie));
           this.shows = response.data.shows.map(show => Show.fromJson(show));
