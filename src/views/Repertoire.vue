@@ -183,6 +183,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    apiError: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -243,6 +247,10 @@ export default {
     },
   },
   mounted() {
+    if (this.apiError || this.shows.length === 0) {
+      this.$router.push('/');
+    }
+
     this.computeTodayLater();
 
     this.updateTimeleft();

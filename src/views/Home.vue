@@ -54,7 +54,10 @@
           </div>
           <div class="col">
             <router-link to="/repertoire">
-              <button class="btn btn-lg btn-primary">
+              <button
+                :disabled="shows.length === 0 || apiError"
+                class="btn btn-lg btn-primary"
+              >
                 <span class="icon"><font-awesome-icon icon="film"/></span>
                 <br>
                 Repertuar Kina
@@ -141,6 +144,10 @@ export default {
     shows: {
       type: Array,
       default: () => [],
+    },
+    apiError: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

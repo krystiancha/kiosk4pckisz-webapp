@@ -30,7 +30,9 @@
 
     <router-view
       :movies="movies"
-      :shows="shows"/>
+      :shows="shows"
+      :api-error="apiError"
+    />
   </div>
 </template>
 
@@ -52,6 +54,7 @@ export default {
         date: '',
         time: '',
       },
+      apiError: false,
     };
   },
   mounted() {
@@ -64,9 +67,13 @@ export default {
       axios
         .get()
         .then((response) => {
+          this.apiError = false;
           this.movies = response.data.movies.map(movie => Movie.fromJson(movie));
           this.shows = response.data.shows.map(show => Show.fromJson(show));
           this.scheduleRemovePastShows();
+        }).catch(() => {
+          this.apiError = true;
+          setTimeout(this.fetchData, 10000);
         });
     },
     scheduleRemovePastShows() {
