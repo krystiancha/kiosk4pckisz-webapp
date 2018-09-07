@@ -34,26 +34,31 @@
         </h4>
         <div
           v-if="filteredShowsToday.length > 0"
-          class="card border-primary">
+          class="card border-primary mb-3">
           <h4 class="card-header bg-primary text-white">Dziś:</h4>
           <div class="list-group list-group-flush">
             <div
               v-for="show in filteredShowsToday"
               :key="show.id"
-              class="list-group-item"
+              class="show list-group-item d-flex flex-row"
             >
-              <div class="row">
-                <div class="col-3">
-                  {{ show.timeleft }}
-                </div>
-                <div class="col-2">
-                  <font-awesome-icon icon="clock"/>
-                  {{ formatTime(show.start, 'H:mm') }}
-                </div>
-                <div class="col-7">
-                  {{ show.movie.title }}
-                </div>
+
+              <div class="date">
+                {{ show.timeleft }}
               </div>
+              <div class="time">
+                <span class="icon text-muted"><font-awesome-icon icon="clock"/></span>
+                {{ formatTime(show.start, 'H:mm') }}
+              </div>
+              <div class="title flex-grow-1">
+                <strong>{{ show.movie.title }}</strong>
+              </div>
+              <button
+                class="btn btn-outline-primary btn-sm align-self-center ml-1"
+                @click="movieSearch = show.movie.title"
+              >
+                <font-awesome-icon icon="arrow-right"/>
+              </button>
             </div>
           </div>
         </div>
@@ -65,7 +70,8 @@
             <div
               v-for="show in filteredShowsLater"
               :key="show.id"
-              class="show list-group-item d-flex flex-row">
+              class="show list-group-item d-flex flex-row"
+            >
               <div class="date">
                 <span class="icon text-muted"><font-awesome-icon icon="calendar"/></span>
                 {{ formatTime(show.start, 'Do MMM') }}
@@ -288,8 +294,8 @@ export default {
 }
 .show {
   .date {
-    min-width: 6rem;
-    width: 6rem;
+    min-width: 7rem;
+    width: 7rem;
   }
   .time {
     min-width: 6rem;
