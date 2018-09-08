@@ -28,17 +28,21 @@
         </div>
         <h4
           v-show="showsSearch"
-          class="text-info"
+          class="text-warning"
         >
           Wyniki wyszukiwania:
         </h4>
         <div
-          v-if="filteredShowsToday.length > 0"
+          v-if="
+            showsToday.length > 0
+              && showsToday.find(show => showSearch(show.movie.title, showsSearch))
+          "
           class="card border-primary mb-3">
           <h4 class="card-header bg-primary text-white">Dziś:</h4>
           <div class="list-group list-group-flush">
             <div
-              v-for="show in filteredShowsToday"
+              v-for="show in showsToday"
+              v-if="showSearch(show.movie.title, showsSearch)"
               :key="show.id"
               class="show list-group-item d-flex flex-row"
             >
@@ -64,13 +68,17 @@
         </div>
         <div class="card">
           <h5
-            v-if="filteredShowsToday.length > 0"
+            v-if="showsToday.length > 0"
             class="card-header">Kolejne dni:</h5>
           <div class="list-group list-group-flush">
             <div
-              v-for="show in filteredShowsLater"
+              v-for="show in showsLater"
               :key="show.id"
-              class="show list-group-item d-flex flex-row"
+              :class="{
+                'd-flex': showSearch(show.movie.title, showsSearch),
+                'd-none': !showSearch(show.movie.title, showsSearch),
+              }"
+              class="show list-group-item flex-row"
             >
               <div class="date">
                 <span class="icon text-muted"><font-awesome-icon icon="calendar"/></span>
@@ -120,34 +128,35 @@
         </div>
         <h4
           v-show="movieSearch"
-          class="text-info"
+          class="text-warning"
         >
           Wyniki wyszukiwania:
         </h4>
         <div
-          v-for="movie in filteredMovies"
+          v-for="movie in movies"
+          v-show="showSearch(movie.title, movieSearch)"
           :key="movie.id"
-          class="card mb-3">
+          class="card border-secondary mb-3">
           <div class="card-body">
             <div class="row">
-              <div class="col-5">
+              <div class="col-4">
                 <img
                   v-if="movie.poster"
                   :src="movie.poster"
                   class="w-100"
                 >
               </div>
-              <div class="col-7">
+              <div class="col-8">
                 <h5 class="card-title">{{ movie.title }} </h5>
-                <span class="mr-3 badge badge-secondary">
+                <span class="mr-3 badge badge-info">
                   <span class="icon"><font-awesome-icon icon="globe-americas"/></span>
                   {{ movie.production }}
                 </span>
-                <span class="mr-3 badge badge-secondary">
+                <span class="mr-3 badge badge-info">
                   <span class="icon"><font-awesome-icon icon="list"/></span>
                   {{ movie.genre }}
                 </span>
-                <span class="mr-3 badge badge-secondary">
+                <span class="mr-3 badge badge-info">
                   <span class="icon"><font-awesome-icon icon="stopwatch"/></span>
                   {{ movie.duration }}
                 </span>
@@ -197,50 +206,6 @@ export default {
       updateTimeleftInterval: -1,
     };
   },
-  computed: {
-    filteredShowsToday() {
-      if (this.showsSearch) {
-        return this.showsToday.filter(show =>
-          show.movie.title
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .search(this.showsSearch
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()) !== -1);
-      }
-      return this.showsToday;
-    },
-    filteredShowsLater() {
-      if (this.showsSearch) {
-        return this.showsLater.filter(show =>
-          show.movie.title
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .search(this.showsSearch
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()) !== -1);
-      }
-      return this.showsLater;
-    },
-    filteredMovies() {
-      if (this.movieSearch) {
-        return this.movies.filter(movie =>
-          movie.title
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .search(this.movieSearch
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase()) !== -1);
-      }
-      return this.movies;
-    },
-  },
   watch: {
     shows() {
       this.computeTodayLater();
@@ -260,6 +225,27 @@ export default {
     clearInterval(this.updateTimeleftInterval);
   },
   methods: {
+    simplifyString(str) {
+      return str
+        .toLowerCase()
+        .split('')
+        .map((char) => {
+          if (char === 'ą') return 'a';
+          else if (char === 'ć') return 'c';
+          else if (char === 'ę') return 'e';
+          else if (char === 'ł') return 'l';
+          else if (char === 'ń') return 'n';
+          else if (char === 'ó') return 'o';
+          else if (char === 'ś') return 's';
+          else if (char === 'ź') return 'z';
+          else if (char === 'ż') return 'z';
+          return char;
+        })
+        .join('');
+    },
+    showSearch(value, searchString) {
+      return this.simplifyString(value).indexOf(this.simplifyString(searchString)) !== -1;
+    },
     computeTodayLater() {
       let showsLaterStart = 0;
       this.shows.some((show) => {
