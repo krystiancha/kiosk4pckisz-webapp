@@ -10,7 +10,7 @@
       >
         <router-link
           to="/"
-          class="btn btn-primary btn-lg"
+          class="btn btn-secondary"
         >
           <span class="icon mr-1"><font-awesome-icon icon="undo"/></span>
           Wróć

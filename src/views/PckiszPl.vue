@@ -1,6 +1,6 @@
 <template>
   <iframe
-    :src="`http://pckisz.pl/${$route.params.path}`"
+    :src="`http://pckisz.pl/${$route.params.path}#small`"
     class="flex-grow-1"
   />
 </template>
