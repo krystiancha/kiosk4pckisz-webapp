@@ -176,11 +176,13 @@ export default {
   },
   methods: {
     tick() {
-      if (this.movies.length > 0 && this.shows.length > 0) {
+      if (this.shows.length > 0) {
         this.currentShow = this.shows
           .find(show => show.start < new Date() && new Date() < show.end);
         this.nextShow = this.shows.find(show => show.start > new Date());
-        this.timeToNextShow = moment(this.nextShow.start).fromNow();
+        if (this.nextShow) {
+          this.timeToNextShow = moment(this.nextShow.start).fromNow();
+        }
       }
     },
   },

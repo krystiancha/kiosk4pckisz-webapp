@@ -54,13 +54,17 @@ export default {
         date: '',
         time: '',
       },
+      updateCurrentTimeStringInterval: -1,
       apiError: false,
     };
   },
   mounted() {
     this.fetchData();
     this.updateCurrentTimeString();
-    this.scheduleUpdateCurrentTimeString();
+    this.updateCurrentTimeStringInterval = setInterval(this.updateCurrentTimeString, 60000);
+  },
+  deactivated() {
+    clearInterval(this.updateCurrentTimeStringInterval);
   },
   methods: {
     fetchData() {
@@ -93,10 +97,14 @@ export default {
       });
       this.shows.splice(0, toRemove);
 
+      this.movies = this.movies.reduce((movies, movie) => {
+        if (this.shows.find(show => show.movie.id === movie.id)) {
+          movies.push(movie);
+        }
+        return movies;
+      }, []);
+
       this.scheduleRemovePastShows();
-    },
-    scheduleUpdateCurrentTimeString() {
-      setTimeout(this.updateCurrentTimeString, 60000);
     },
     updateCurrentTimeString() {
       this.currentTimeString.date = moment().format('Do MMM');
