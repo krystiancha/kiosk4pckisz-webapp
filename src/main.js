@@ -24,6 +24,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment';
 import IdleVue from 'idle-vue';
+import BootstrapVue from 'bootstrap-vue';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 import App from './App.vue';
 import './main.scss';
 import router from './router';
@@ -39,12 +41,12 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 moment.locale('pl');
 
-const options = {
+Vue.use(IdleVue, {
   eventEmitter: new Vue(),
   idleTime: 3600 * 1000,
-};
+});
 
-Vue.use(IdleVue, options);
+Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
 

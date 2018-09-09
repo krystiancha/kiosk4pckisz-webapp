@@ -28,91 +28,44 @@
       </div>
     </nav>
 
-    <router-view
-      :movies="movies"
-      :shows="shows"
-      :api-error="apiError"
-    />
+    <router-view />
   </div>
 </template>
 
 <script>
-/* eslint-disable no-console */
-
-import axios from '@/axios';
 import moment from 'moment';
-import Movie from './models/Movie';
-import Show from './models/Show';
+import api from '@/api';
 
 export default {
   name: 'App',
   data() {
     return {
-      movies: [],
-      shows: [],
+      api,
       currentTimeString: {
         date: '',
         time: '',
       },
       updateCurrentTimeStringInterval: -1,
       apiError: false,
+      apiSuccess: false,
     };
   },
   mounted() {
-    this.fetchData();
+    this.api.fetch();
     this.updateCurrentTimeString();
-    this.updateCurrentTimeStringInterval = setInterval(this.updateCurrentTimeString, 60000);
+    this.updateCurrentTimeStringInterval = setInterval(this.updateCurrentTimeString, 1000);
   },
   deactivated() {
     clearInterval(this.updateCurrentTimeStringInterval);
   },
+  onIdle() {
+    this.$router.push('/');
+  },
   methods: {
-    fetchData() {
-      axios
-        .get()
-        .then((response) => {
-          this.apiError = false;
-          this.movies = response.data.movies.map(movie => Movie.fromJson(movie));
-          this.shows = response.data.shows.map(show => Show.fromJson(show));
-          this.scheduleRemovePastShows();
-        }).catch(() => {
-          this.apiError = true;
-          setTimeout(this.fetchData, 10000);
-        });
-    },
-    scheduleRemovePastShows() {
-      if (this.shows.length > 0) {
-        setTimeout(this.removePastShows, this.shows[0].end - new Date());
-      }
-    },
-    removePastShows() {
-      const now = new Date();
-      let toRemove = 0;
-      this.shows.some((show) => {
-        if (show.end <= now) {
-          toRemove += 1;
-          return false;
-        }
-        return true;
-      });
-      this.shows.splice(0, toRemove);
-
-      this.movies = this.movies.reduce((movies, movie) => {
-        if (this.shows.find(show => show.movie.id === movie.id)) {
-          movies.push(movie);
-        }
-        return movies;
-      }, []);
-
-      this.scheduleRemovePastShows();
-    },
     updateCurrentTimeString() {
       this.currentTimeString.date = moment().format('Do MMM');
       this.currentTimeString.time = moment().format('H:mm');
     },
-  },
-  onIdle() {
-    this.$router.push('/');
   },
 };
 </script>

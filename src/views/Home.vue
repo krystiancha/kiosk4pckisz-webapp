@@ -4,17 +4,12 @@
     <div class="container flex-grow-1 d-flex flex-column justify-content-around">
 
       <div
-        :class="{ hidden: !(currentShow || nextShow) }"
+        :class="{ hidden: api.state !== api.SUCCESS }"
         class="alert alert-info"
       >
-        <span v-if="currentShow">
-          Aktualny seans to <span class="alert-link">{{ currentShow.movie.title }}</span>.
-        </span>
         <span v-if="nextShow">
-          Następny <span v-if="!currentShow">seans</span> {{ nextShowTime }}
-          ({{ timeToNextShow }}): <span class="alert-link">{{ nextShow.movie.title }}</span>.
+          Następny seans: <strong>{{ nextShow.movie.title }}</strong> {{ timeToNextShow }}
         </span>
-        <span v-if="!currentShow && !nextShow">PLACEHOLDER</span>
       </div>
 
       <div class="d-flex flex-row justify-content-center mt-5">
@@ -55,7 +50,9 @@
           <div class="col">
             <router-link to="/repertoire">
               <button
-                :disabled="shows.length === 0 || apiError"
+                v-b-tooltip
+                :disabled="api.state !== api.SUCCESS"
+                :title="repertoireButtonTooltip"
                 class="btn btn-lg btn-primary"
               >
                 <span class="icon"><font-awesome-icon icon="film"/></span>
@@ -133,58 +130,71 @@
 
 <script>
 import moment from 'moment';
+import api from '@/api';
 
 export default {
   name: 'Home',
-  props: {
-    movies: {
-      type: Array,
-      default: () => [],
-    },
-    shows: {
-      type: Array,
-      default: () => [],
-    },
-    apiError: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
-      currentShow: undefined,
-      nextShow: undefined,
-      timeToNextShow: '',
-      nextShowTime: '',
-      tickInterval: -1,
+      api,
+      now: new Date(),
+      nowInterval: -1,
     };
   },
-  watch: {
-    nextShow(val) {
-      if (this.movies.length > 0 && val) {
-        const format = moment().isSame(val.start, 'day') ? '[o] H:mm' : 'Do MMM [o] H:mm';
-        this.nextShowTime = moment(val.start).format(format);
+  computed: {
+    currentShow() {
+      if (
+        this.api.shows.length > 0
+        && this.api.shows[0].start <= this.now
+        && this.now < this.api.shows[0].end
+      ) {
+        return this.api.shows[0];
       }
+      return undefined;
+    },
+    nextShow() {
+      if (this.currentShow && this.api.shows.length > 1) {
+        return this.api.shows[1];
+      }
+      if (this.api.shows.length > 0) {
+        return this.api.shows[0];
+      }
+      return undefined;
+    },
+    isNextShowToday() {
+      if (this.nextShow) {
+        return moment().isSame(this.nextShow.start, 'day');
+      }
+      return false;
+    },
+    timeToNextShow() {
+      if (this.nextShow) {
+        return moment().to(this.nextShow.start);
+      }
+      return '';
+    },
+    repertoireButtonTooltip() {
+      return '';
     },
   },
   mounted() {
-    this.tick();
-    this.tickInterval = setInterval(this.tick, 1000);
+    this.nowInterval = setInterval(() => { this.now = new Date(); }, 1000);
   },
   deactivated() {
-    clearInterval(this.tickInterval);
+    clearInterval(this.nowInterval);
+    // clearInterval(this.tickInterval);
   },
   methods: {
-    tick() {
-      if (this.shows.length > 0) {
-        this.currentShow = this.shows
-          .find(show => show.start < new Date() && new Date() < show.end);
-        this.nextShow = this.shows.find(show => show.start > new Date());
-        if (this.nextShow) {
-          this.timeToNextShow = moment(this.nextShow.start).fromNow();
-        }
-      }
-    },
+    // tick() {
+    //   if (this.shows.length > 0) {
+    //     this.currentShow = this.shows
+    //       .find(show => show.start < new Date() && new Date() < show.end);
+    //     this.nextShow = this.shows.find(show => show.start > new Date());
+    //     if (this.nextShow) {
+    //       this.timeToNextShow = moment(this.nextShow.start).fromNow();
+    //     }
+    //   }
+    // },
   },
 };
 </script>
