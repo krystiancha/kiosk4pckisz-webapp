@@ -32,7 +32,9 @@
         >
           Wyniki wyszukiwania:
         </h4>
-        <div class="card border-primary mb-3">
+        <div
+          v-show="showsToday.length > 0"
+          class="card border-primary mb-3">
           <h4 class="card-header bg-primary text-white">Dziś:</h4>
           <div class="list-group list-group-flush">
             <show
@@ -47,6 +49,7 @@
         </div>
         <div class="card">
           <h5
+            v-show="showsToday.length > 0"
             class="card-header">Kolejne dni:</h5>
           <div class="list-group list-group-flush">
             <show

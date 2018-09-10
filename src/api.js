@@ -1,7 +1,7 @@
 import moment from 'moment';
 import axios from '@/axios';
 
-class Movie {
+export class Movie {
   static fromJson(obj) {
     const movie = new Movie();
 
@@ -14,7 +14,7 @@ class Movie {
   }
 }
 
-class Show {
+export class Show {
   static fromJson(obj) {
     const show = new Show();
 

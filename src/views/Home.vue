@@ -4,12 +4,26 @@
     <div class="container flex-grow-1 d-flex flex-column justify-content-around">
 
       <div
-        :class="{ hidden: api.state !== api.SUCCESS }"
+        v-show="api.state === api.SUCCESS"
         class="alert alert-info"
       >
         <span v-if="nextShow">
           Następny seans: <strong>{{ nextShow.movie.title }}</strong> {{ timeToNextShow }}
         </span>
+      </div>
+      <div
+        v-show="api.state === api.PENDING"
+        class="alert alert-info"
+      >
+        Trwa wczytywanie repertuaru kina... Przez ten czas będzie on niedostępny. Może to potrwać
+        kilka sekund.
+      </div>
+      <div
+        v-show="api.state === api.ERROR"
+        class="alert alert-warning"
+      >
+        Przepraszamy, <strong>repertuar kina</strong> jest obecnie niedostępny. Zachęcamy do
+        skorzystania z pozostałych funkcji kiosku np. <em>Aktualności</em>.
       </div>
 
       <div class="d-flex flex-row justify-content-center mt-5">
@@ -53,16 +67,9 @@
                 :disabled="api.state !== api.SUCCESS"
                 class="btn btn-lg btn-primary"
               >
-                <span v-if="api.state === api.SUCCESS">
-                  <span class="icon"><font-awesome-icon icon="film"/></span>
-                  <br>
-                  Repertuar Kina
-                </span>
-                <span v-else>
-                  <span class="icon"><font-awesome-icon icon="sync" spin/></span>
-                  <br>
-                  <span style="font-size: 1rem;">Wczytywanie repertuaru kina</span>
-                </span>
+                <span class="icon"><font-awesome-icon icon="film"/></span>
+                <br>
+                Repertuar Kina
               </button>
             </router-link>
           </div>
