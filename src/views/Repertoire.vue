@@ -151,7 +151,7 @@ export default {
   mounted() {
     this.nowInterval = setInterval(() => { this.now = new Date(); }, 1000);
   },
-  deactivated() {
+  beforeDestroy() {
     clearInterval(this.nowInterval);
   },
   methods: {
