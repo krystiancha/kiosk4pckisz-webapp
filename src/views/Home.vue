@@ -50,14 +50,19 @@
           <div class="col">
             <router-link to="/repertoire">
               <button
-                v-b-tooltip
                 :disabled="api.state !== api.SUCCESS"
-                :title="repertoireButtonTooltip"
                 class="btn btn-lg btn-primary"
               >
-                <span class="icon"><font-awesome-icon icon="film"/></span>
-                <br>
-                Repertuar Kina
+                <span v-if="api.state === api.SUCCESS">
+                  <span class="icon"><font-awesome-icon icon="film"/></span>
+                  <br>
+                  Repertuar Kina
+                </span>
+                <span v-else>
+                  <span class="icon"><font-awesome-icon icon="sync" spin/></span>
+                  <br>
+                  <span style="font-size: 1rem;">Wczytywanie repertuaru kina</span>
+                </span>
               </button>
             </router-link>
           </div>
@@ -173,28 +178,12 @@ export default {
       }
       return '';
     },
-    repertoireButtonTooltip() {
-      return '';
-    },
   },
   mounted() {
     this.nowInterval = setInterval(() => { this.now = new Date(); }, 1000);
   },
-  deactivated() {
+  beforeDestroy() {
     clearInterval(this.nowInterval);
-    // clearInterval(this.tickInterval);
-  },
-  methods: {
-    // tick() {
-    //   if (this.shows.length > 0) {
-    //     this.currentShow = this.shows
-    //       .find(show => show.start < new Date() && new Date() < show.end);
-    //     this.nextShow = this.shows.find(show => show.start > new Date());
-    //     if (this.nextShow) {
-    //       this.timeToNextShow = moment(this.nextShow.start).fromNow();
-    //     }
-    //   }
-    // },
   },
 };
 </script>
@@ -218,5 +207,8 @@ button {
 .footer {
   line-height: 3rem;
   font-size: 0.9rem;
+}
+.alert {
+  height: 3rem;
 }
 </style>
