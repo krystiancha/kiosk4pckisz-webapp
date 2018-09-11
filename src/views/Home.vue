@@ -131,10 +131,11 @@
         <div>
           Wykonanie: <strong>Krystian Chachuła</strong>
         </div>
-        <div class="ml-5">
+        <div class="ml-5 flex-grow-1">
           <span class="mr-1"><font-awesome-icon icon="envelope"/></span>
           krystiancha@gmail.com
         </div>
+        <div>{{ $headHash }}</div>
       </div>
     </div>
 

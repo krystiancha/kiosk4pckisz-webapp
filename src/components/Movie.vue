@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import { Movie } from '@/api';
+import api from '@/api';
 import { simplify } from '@/utilities';
 
 export default {
   name: 'Movie',
   props: {
     movie: {
-      type: Movie,
+      type: api.Movie,
       default: null,
     },
     searchText: {

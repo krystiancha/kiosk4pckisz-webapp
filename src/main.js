@@ -51,6 +51,8 @@ Vue.use(VueAnalytics, {
   router,
 });
 
+Vue.prototype.$headHash = __COMMIT_HASH__;
+
 Vue.config.productionTip = false;
 
 new Vue({
