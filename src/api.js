@@ -1,7 +1,7 @@
 import moment from 'moment';
 import axios from '@/axios';
 
-export class Movie {
+class Movie {
   static fromJson(obj) {
     const movie = new Movie();
 
@@ -14,11 +14,11 @@ export class Movie {
   }
 }
 
-export class Show {
+class Show {
   static fromJson(obj) {
     const show = new Show();
 
-    ['id', 'movie']
+    ['id', 'movie', 'theater']
       .forEach((field) => { show[field] = obj[field]; });
 
     show.start = new Date(obj.start);
@@ -41,9 +41,15 @@ export default {
   PENDING: 0,
   SUCCESS: 1,
   ERROR: 2,
+  Show,
+  Movie,
   state: 0,
   movies: [],
   shows: [],
+  now: new Date(),
+  startClock() {
+    setInterval(() => { this.now = new Date(); }, 60000);
+  },
   fetch() {
     axios.get()
       .then((response) => {

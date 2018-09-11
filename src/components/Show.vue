@@ -2,20 +2,33 @@
   <div
     v-if="show"
     v-show="isSearched"
+    :class="{ 'list-group-item-secondary': isInProgress }"
   >
     <div class="d-flex flex-row">
       <div
         v-if="showDate"
-        class="date">
+        class="date align-self-center">
         <span class="icon text-muted"><font-awesome-icon icon="calendar"/></span>
         {{ show.startf.date }}
       </div>
-      <div class="time">
+      <div
+        v-show="isInProgress"
+        class="time align-self-center">
+        trwa
+      </div>
+      <div
+        v-show="!isInProgress"
+        class="time align-self-center">
         <span class="icon text-muted"><font-awesome-icon icon="clock"/></span>
         {{ show.startf.time }}
       </div>
-      <div class="title flex-grow-1">
-        <strong>{{ show.movie.title }}</strong>
+      <div class="title flex-grow-1 align-self-center">
+        <strong class="mr-2">{{ show.movie.title }}</strong>
+        <span
+          v-show="show.theater === 1"
+          class="badge badge-success mr-2">
+          Małe kino
+        </span>
       </div>
       <button
         class="btn btn-outline-primary btn-sm align-self-center ml-1"
@@ -28,14 +41,14 @@
 </template>
 
 <script>
-import { Show } from '@/api';
+import api from '@/api';
 import { simplify } from '@/utilities';
 
 export default {
   name: 'Show',
   props: {
     show: {
-      type: Show,
+      type: api.Show,
       default: null,
     },
     searchText: {
@@ -47,12 +60,20 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      api,
+    };
+  },
   computed: {
     isSearched() {
       if (this.searchText !== '') {
         return simplify(this.show.movie.title).indexOf(this.searchText) !== -1;
       }
       return true;
+    },
+    isInProgress() {
+      return this.show.start <= this.api.now && this.api.now < this.show.end;
     },
   },
 };

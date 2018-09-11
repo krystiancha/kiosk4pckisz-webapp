@@ -41,31 +41,22 @@ export default {
   data() {
     return {
       api,
-      currentTimeString: {
-        date: '',
-        time: '',
-      },
-      updateCurrentTimeStringInterval: -1,
-      apiError: false,
-      apiSuccess: false,
     };
   },
-  mounted() {
-    this.api.fetch();
-    this.updateCurrentTimeString();
-    this.updateCurrentTimeStringInterval = setInterval(this.updateCurrentTimeString, 1000);
+  computed: {
+    currentTimeString() {
+      return {
+        date: moment(api.now).format('Do MMM'),
+        time: moment(api.now).format('H:mm'),
+      };
+    },
   },
-  deactivated() {
-    clearInterval(this.updateCurrentTimeStringInterval);
+  mounted() {
+    this.api.startClock();
+    this.api.fetch();
   },
   onIdle() {
     this.$router.push('/');
-  },
-  methods: {
-    updateCurrentTimeString() {
-      this.currentTimeString.date = moment().format('Do MMM');
-      this.currentTimeString.time = moment().format('H:mm');
-    },
   },
 };
 </script>

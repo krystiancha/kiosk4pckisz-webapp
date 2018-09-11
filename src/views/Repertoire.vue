@@ -119,10 +119,8 @@ export default {
     return {
       api,
       mountTime: new Date(),
-      now: new Date(),
       showSearch: '',
       movieSearch: '',
-      nowInterval: -1,
     };
   },
   computed: {
@@ -150,12 +148,6 @@ export default {
     simplifiedMovieSearch() {
       return simplify(this.movieSearch);
     },
-  },
-  mounted() {
-    this.nowInterval = setInterval(() => { this.now = new Date(); }, 1000);
-  },
-  beforeDestroy() {
-    clearInterval(this.nowInterval);
   },
   methods: {
     showMovie(movie) {

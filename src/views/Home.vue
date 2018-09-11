@@ -9,6 +9,7 @@
       >
         <span v-if="nextShow">
           Następny seans: <strong>{{ nextShow.movie.title }}</strong> {{ timeToNextShow }}
+          <strong v-show="nextShow.theater === 1">w Małym kinie</strong>
         </span>
       </div>
       <div
@@ -149,48 +150,36 @@ export default {
   data() {
     return {
       api,
-      now: new Date(),
-      nowInterval: -1,
     };
   },
   computed: {
-    currentShow() {
-      if (
-        this.api.shows.length > 0
-        && this.api.shows[0].start <= this.now
-        && this.now < this.api.shows[0].end
-      ) {
-        return this.api.shows[0];
-      }
-      return undefined;
-    },
     nextShow() {
-      if (this.currentShow && this.api.shows.length > 1) {
-        return this.api.shows[1];
-      }
-      if (this.api.shows.length > 0) {
-        return this.api.shows[0];
-      }
-      return undefined;
+      return this.api.shows.find(show => show.start > this.api.now);
     },
     isNextShowToday() {
       if (this.nextShow) {
-        return moment().isSame(this.nextShow.start, 'day');
+        return moment(this.api.now).isSame(this.nextShow.start, 'day');
+      }
+      return false;
+    },
+    isNextShowTomorrow() {
+      if (this.nextShow) {
+        return moment(this.api.now).add(1, 'days').isSame(this.nextShow.start, 'day');
       }
       return false;
     },
     timeToNextShow() {
       if (this.nextShow) {
-        return moment().to(this.nextShow.start);
+        if (this.isNextShowToday) {
+          return `o ${moment(this.nextShow.start).format('H:mm')} (${moment(this.api.now).to(this.nextShow.start)})`;
+        }
+        if (this.isNextShowTomorrow) {
+          return `jutro o ${moment(this.nextShow.start).format('H:mm')}`;
+        }
+        return moment(this.nextShow.start).format('Do MMM o H:mm');
       }
       return '';
     },
-  },
-  mounted() {
-    this.nowInterval = setInterval(() => { this.now = new Date(); }, 1000);
-  },
-  beforeDestroy() {
-    clearInterval(this.nowInterval);
   },
 };
 </script>
