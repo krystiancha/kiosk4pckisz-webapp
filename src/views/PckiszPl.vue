@@ -42,6 +42,7 @@ export default {
   top: 4rem;
   left: 12%;
   width: 75%;
+  z-index: 3;
 }
 .loading {
   position: absolute;
