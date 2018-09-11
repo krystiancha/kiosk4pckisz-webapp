@@ -25,6 +25,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment';
 import IdleVue from 'idle-vue';
+import VueAnalytics from 'vue-analytics';
 import App from './App.vue';
 import './main.scss';
 import router from './router';
@@ -43,6 +44,11 @@ moment.locale('pl');
 Vue.use(IdleVue, {
   eventEmitter: new Vue(),
   idleTime: 180000,
+});
+
+Vue.use(VueAnalytics, {
+  id: process.env.VUE_APP_GA_TRACKING_ID || 'UA-XXX-X',
+  router,
 });
 
 Vue.config.productionTip = false;

@@ -54,9 +54,11 @@ export default {
   mounted() {
     this.api.startClock();
     this.api.fetch();
+    this.$ga.event('app', 'launch');
   },
   onIdle() {
     this.$router.push('/');
+    this.$ga.event('app', 'idle');
   },
 };
 </script>

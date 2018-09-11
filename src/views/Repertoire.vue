@@ -20,7 +20,7 @@
             <button
               class="btn btn-outline-secondary"
               type="button"
-              @click="showSearch = ''"
+              @click="clearShowSearch"
             >
               <span class="icon mr-1"><font-awesome-icon icon="times"/></span>
             </button>
@@ -81,7 +81,7 @@
             <button
               class="btn btn-outline-secondary"
               type="button"
-              @click="movieSearch = ''"
+              @click="clearMovieSearch"
             >
               <span class="icon mr-1"><font-awesome-icon icon="times"/></span>
             </button>
@@ -118,7 +118,6 @@ export default {
   data() {
     return {
       api,
-      mountTime: new Date(),
       showSearch: '',
       movieSearch: '',
     };
@@ -127,7 +126,7 @@ export default {
     lastShowTodayIndex() {
       let i = 0;
       this.api.shows.some((show) => {
-        if (moment(this.mountTime).isSame(show.start, 'day')) {
+        if (moment(this.api.now).isSame(show.start, 'day')) {
           i += 1;
           return false;
         }
@@ -152,9 +151,19 @@ export default {
   methods: {
     showMovie(movie) {
       this.movieSearch = movie.title;
+      this.$ga.event('repertoire', 'showMovie', movie.title);
     },
     showShows(movie) {
       this.showSearch = movie.title;
+      this.$ga.event('repertoire', 'showShows', movie.title);
+    },
+    clearMovieSearch() {
+      this.showSearch = '';
+      this.$ga.event('repertoire', 'clearMovieSearch');
+    },
+    clearShowSearch() {
+      this.movieSearch = '';
+      this.$ga.event('repertoire', 'clearShowSearch');
     },
   },
 };

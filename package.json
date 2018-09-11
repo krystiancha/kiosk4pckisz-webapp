@@ -17,6 +17,7 @@
     "idle-vue": "^2.0.5",
     "moment": "^2.22.2",
     "vue": "^2.5.17",
+    "vue-analytics": "^5.16.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
