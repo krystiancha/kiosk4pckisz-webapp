@@ -25,6 +25,7 @@
       >
         Przepraszamy, <strong>repertuar kina</strong> jest obecnie niedostępny. Zachęcamy do
         skorzystania z pozostałych funkcji kiosku np. <em>Aktualności</em>.
+        <span class="small">(błąd: {{ api.errorMsg }})</span>
       </div>
 
       <div class="d-flex flex-row justify-content-center mt-5">

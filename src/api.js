@@ -41,6 +41,7 @@ export default {
   PENDING: 0,
   SUCCESS: 1,
   ERROR: 2,
+  errorMsg: '',
   Show,
   Movie,
   state: 0,
@@ -58,8 +59,9 @@ export default {
         this.shows = response.data.shows.map(show => Show.fromJson(show));
         this.scheduleUpdates();
       })
-      .catch(() => {
+      .catch((error) => {
         this.state = this.ERROR;
+        this.errorMsg = error.message;
         setTimeout(() => { this.fetch(); }, 10000);
       });
   },
