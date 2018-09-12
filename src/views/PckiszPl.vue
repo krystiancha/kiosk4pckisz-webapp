@@ -8,7 +8,9 @@
       <strong>Wskazówka:</strong>
       Aby zamknąć zdjęcie otwarte w galerii, proszę dotknąć wyszarzonego pola poza zdjęciem.
     </div>
-    <div class="loading text-muted text-center">
+    <div
+      v-show="!loaded"
+      class="loading text-muted text-center">
       <div>
         <span class="icon">
           <font-awesome-icon
@@ -23,6 +25,7 @@
       :src="`http://pckisz.pl/${$route.params.path}#small`"
       class="flex-grow-1"
       sandbox="allow-scripts"
+      @load="loaded = true"
     />
   </div>
 </template>
@@ -30,6 +33,11 @@
 <script>
 export default {
   name: 'PckiszPl',
+  data() {
+    return {
+      loaded: false,
+    };
+  },
 };
 </script>
 
