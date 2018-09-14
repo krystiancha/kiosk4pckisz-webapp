@@ -158,11 +158,11 @@ export default {
       this.$ga.event('repertoire', 'showShows', movie.title);
     },
     clearMovieSearch() {
-      this.showSearch = '';
+      this.movieSearch = '';
       this.$ga.event('repertoire', 'clearMovieSearch');
     },
     clearShowSearch() {
-      this.movieSearch = '';
+      this.showSearch = '';
       this.$ga.event('repertoire', 'clearShowSearch');
     },
   },
