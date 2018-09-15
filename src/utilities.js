@@ -4,21 +4,21 @@ const simplify = str => str
   .map((char) => {
     if (char === 'ą') {
       return 'a';
-    } else if (char === 'ć') {
+    } if (char === 'ć') {
       return 'c';
-    } else if (char === 'ę') {
+    } if (char === 'ę') {
       return 'e';
-    } else if (char === 'ł') {
+    } if (char === 'ł') {
       return 'l';
-    } else if (char === 'ń') {
+    } if (char === 'ń') {
       return 'n';
-    } else if (char === 'ó') {
+    } if (char === 'ó') {
       return 'o';
-    } else if (char === 'ś') {
+    } if (char === 'ś') {
       return 's';
-    } else if (char === 'ź') {
+    } if (char === 'ź') {
       return 'z';
-    } else if (char === 'ż') return 'z';
+    } if (char === 'ż') return 'z';
     return char;
   })
   .join('');
