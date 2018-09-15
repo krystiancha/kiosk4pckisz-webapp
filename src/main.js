@@ -49,9 +49,6 @@ Vue.use(IdleVue, {
 Vue.use(VueAnalytics, {
   id: process.env.VUE_APP_GA_TRACKING_ID || 'UA-XXX-X',
   router,
-  autoTracking: {
-    pageviewOnLoad: false,
-  },
 });
 
 Vue.prototype.$headHash = __COMMIT_HASH__;
