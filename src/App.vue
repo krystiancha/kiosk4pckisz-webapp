@@ -65,7 +65,7 @@ export default {
 
 <style scoped lang="scss">
 .navbar {
-  min-height: 3.5rem;
-  height: 3.5rem;
+  min-height: 4.25rem;
+  height: 4.25rem;
 }
 </style>
