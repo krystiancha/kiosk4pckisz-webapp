@@ -69,3 +69,31 @@ export default {
   height: 4.25rem;
 }
 </style>
+
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+#nprogress .bar {
+  height: 0.5rem;
+}
+
+#nprogress .spinner {
+  top: 5rem;
+  right: 1rem;
+}
+
+#nprogress .spinner-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+</style>

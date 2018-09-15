@@ -8,35 +8,33 @@
       <strong>Wskazówka:</strong>
       Aby zamknąć zdjęcie otwarte w galerii, proszę dotknąć wyszarzonego pola poza zdjęciem.
     </div>
-    <div
-      v-show="!loaded"
-      class="loading text-muted text-center">
-      <div>
-        <span class="icon">
-          <font-awesome-icon
-            icon="sync"
-            spin/>
-        </span>
-        <br>
-        Trwa wczytywanie, proszę czekać...
-      </div>
-    </div>
     <iframe
       :src="`http://pckisz.pl/${$route.params.path}#small`"
       class="flex-grow-1"
       sandbox="allow-scripts"
-      @load="loaded = true"
+      @load="load"
     />
   </div>
 </template>
 
 <script>
+import NProgress from 'nprogress';
+
 export default {
   name: 'PckiszPl',
   data() {
     return {
       loaded: false,
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    NProgress.start();
+    next();
+  },
+  methods: {
+    load() {
+      NProgress.done();
+    },
   },
 };
 </script>

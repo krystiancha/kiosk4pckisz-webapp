@@ -26,6 +26,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment';
 import IdleVue from 'idle-vue';
 import VueAnalytics from 'vue-analytics';
+import 'nprogress/nprogress.css';
 import App from './App.vue';
 import './main.scss';
 import router from './router';

@@ -145,6 +145,7 @@
 
 <script>
 import moment from 'moment';
+import NProgress from 'nprogress';
 import api from '@/api';
 
 export default {
@@ -182,6 +183,13 @@ export default {
       }
       return '';
     },
+  },
+  mounted() {
+    NProgress.done();
+  },
+  beforeRouteEnter(to, from, next) {
+    NProgress.start();
+    next();
   },
 };
 </script>

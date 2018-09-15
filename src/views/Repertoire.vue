@@ -107,6 +107,7 @@
 
 <script>
 import moment from 'moment';
+import NProgress from 'nprogress';
 import api from '@/api';
 import { simplify } from '@/utilities';
 import Show from '../components/Show.vue';
@@ -147,6 +148,13 @@ export default {
     simplifiedMovieSearch() {
       return simplify(this.movieSearch);
     },
+  },
+  mounted() {
+    NProgress.done();
+  },
+  beforeRouteEnter(to, from, next) {
+    NProgress.start();
+    next();
   },
   methods: {
     showMovie(movie) {
