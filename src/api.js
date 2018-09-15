@@ -8,7 +8,8 @@ class Movie {
     ['id', 'title', 'description', 'poster', 'production', 'genre']
       .forEach((field) => { movie[field] = obj[field]; });
 
-    movie.duration = `${moment.duration(obj.duration).asMinutes()} min`;
+    movie.duration = `${moment.duration(obj.duration)
+      .asMinutes()} min`;
 
     return movie;
   }
@@ -31,8 +32,10 @@ class Show {
 
   static datef(date) {
     return {
-      time: moment(date).format('H:mm'),
-      date: moment(date).format('Do MMM'),
+      time: moment(date)
+        .format('H:mm'),
+      date: moment(date)
+        .format('Do MMM'),
     };
   }
 }

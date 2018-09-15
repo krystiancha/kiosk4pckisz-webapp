@@ -3,8 +3,7 @@
     <div
       v-if="$route.params.path === 'galeria-zdjec,143'"
       class="alert alert-warning border-warning mx-auto m-0"
-      role="alert"
-    >
+      role="alert">
       <strong>Wskazówka:</strong>
       Aby zamknąć zdjęcie otwarte w galerii, proszę dotknąć wyszarzonego pola poza zdjęciem.
     </div>
@@ -12,8 +11,7 @@
       :src="`http://pckisz.pl/${$route.params.path}#small`"
       class="flex-grow-1"
       sandbox="allow-scripts"
-      @load="load"
-    />
+      @load="load"/>
   </div>
 </template>
 
@@ -65,7 +63,6 @@ export default {
 }
 iframe {
   border: none;
-
   z-index: 2;
 }
 </style>

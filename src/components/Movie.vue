@@ -9,11 +9,10 @@
           <img
             v-if="movie.poster"
             :src="movie.poster"
-            class="w-100"
-          >
+            class="w-100">
         </div>
         <div class="col-8">
-          <h5 class="card-title">{{ movie.title }} </h5>
+          <h5 class="card-title">{{ movie.title }}</h5>
           <span class="mr-3 badge badge-info">
             <span class="icon"><font-awesome-icon icon="globe-americas"/></span>
             {{ movie.production }}
@@ -30,8 +29,7 @@
           <button
             type="button"
             class="btn btn-outline-primary"
-            @click="$emit('show-shows', movie)"
-          >
+            @click="$emit('show-shows', movie)">
             <span class="icon"><font-awesome-icon icon="arrow-left"/></span>
             Pokaż seanse
           </button>
@@ -43,7 +41,7 @@
 
 <script>
 import api from '@/api';
-import { simplify } from '@/utilities';
+import utilities from '@/utilities';
 
 export default {
   name: 'Movie',
@@ -60,7 +58,7 @@ export default {
   computed: {
     isSearched() {
       if (this.searchText !== '') {
-        return simplify(this.movie.title).indexOf(this.searchText) !== -1;
+        return utilities.simplify(this.movie.title).indexOf(this.searchText) !== -1;
       }
       return true;
     },
@@ -68,7 +66,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .icon {
   margin-right: 0.25rem;
 }

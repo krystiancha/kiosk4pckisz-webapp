@@ -14,22 +14,19 @@
             v-model="showSearch"
             type="text"
             class="form-control mb-3"
-            placeholder="Wpisz tytuł filmu"
-          >
+            placeholder="Wpisz tytuł filmu">
           <div class="input-group-append">
             <button
               class="btn btn-outline-secondary"
               type="button"
-              @click="clearShowSearch"
-            >
+              @click="clearShowSearch">
               <span class="icon mr-1"><font-awesome-icon icon="times"/></span>
             </button>
           </div>
         </div>
         <h4
           v-show="showSearch"
-          class="text-warning"
-        >
+          class="text-warning">
           Wyniki wyszukiwania:
         </h4>
         <div
@@ -44,7 +41,7 @@
               :search-text="simplifiedShowSearch"
               :show-date="false"
               class="show list-group-item"
-              @show-movie="showMovie" />
+              @show-movie="showMovie"/>
           </div>
         </div>
         <div class="card">
@@ -58,7 +55,7 @@
               :show="show"
               :search-text="simplifiedShowSearch"
               class="show list-group-item"
-              @show-movie="showMovie" />
+              @show-movie="showMovie"/>
           </div>
         </div>
       </div>
@@ -75,22 +72,19 @@
             v-model="movieSearch"
             type="text"
             class="form-control mb-3"
-            placeholder="Wpisz tytuł filmu"
-          >
+            placeholder="Wpisz tytuł filmu">
           <div class="input-group-append">
             <button
               class="btn btn-outline-secondary"
               type="button"
-              @click="clearMovieSearch"
-            >
+              @click="clearMovieSearch">
               <span class="icon mr-1"><font-awesome-icon icon="times"/></span>
             </button>
           </div>
         </div>
         <h4
           v-show="movieSearch"
-          class="text-warning"
-        >
+          class="text-warning">
           Wyniki wyszukiwania:
         </h4>
         <movie
@@ -99,7 +93,7 @@
           :movie="movie"
           :search-text="simplifiedMovieSearch"
           class="mb-3"
-          @show-shows="showShows" />
+          @show-shows="showShows"/>
       </div>
     </div>
   </div>
@@ -109,18 +103,21 @@
 import moment from 'moment';
 import NProgress from 'nprogress';
 import api from '@/api';
-import { simplify } from '@/utilities';
-import Show from '../components/Show.vue';
-import Movie from '../components/Movie.vue';
+import utilities from '@/utilities';
+import Movie from '@/components/Movie.vue';
+import Show from '@/components/Show.vue';
 
 export default {
   name: 'Repertoire',
-  components: { Movie, Show },
+  components: {
+    Movie,
+    Show,
+  },
   data() {
     return {
       api,
-      showSearch: '',
       movieSearch: '',
+      showSearch: '',
     };
   },
   computed: {
@@ -133,7 +130,6 @@ export default {
         }
         return true;
       });
-
       return i - 1;
     },
     showsToday() {
@@ -142,19 +138,19 @@ export default {
     showsLater() {
       return this.api.shows.slice(this.lastShowTodayIndex + 1);
     },
-    simplifiedShowSearch() {
-      return simplify(this.showSearch);
-    },
     simplifiedMovieSearch() {
-      return simplify(this.movieSearch);
+      return utilities.simplify(this.movieSearch);
     },
-  },
-  mounted() {
-    NProgress.done();
+    simplifiedShowSearch() {
+      return utilities.simplify(this.showSearch);
+    },
   },
   beforeRouteEnter(to, from, next) {
     NProgress.start();
     next();
+  },
+  mounted() {
+    NProgress.done();
   },
   methods: {
     showMovie(movie) {

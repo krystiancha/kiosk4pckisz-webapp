@@ -7,6 +7,9 @@ const commitHash = require('child_process')
 
 module.exports = {
   configureWebpack: {
+    performance: {
+      hints: false,
+    },
     plugins: [
       new webpack.DefinePlugin({
         __COMMIT_HASH__: JSON.stringify(commitHash),

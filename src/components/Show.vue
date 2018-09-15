@@ -2,8 +2,7 @@
   <div
     v-if="show"
     v-show="isSearched"
-    :class="{ 'list-group-item-secondary': isInProgress }"
-  >
+    :class="{ 'list-group-item-secondary': isInProgress }">
     <div class="d-flex flex-row">
       <div
         v-if="showDate"
@@ -32,8 +31,7 @@
       </div>
       <button
         class="btn btn-outline-primary btn-sm align-self-center ml-1"
-        @click="$emit('show-movie', show.movie)"
-      >
+        @click="$emit('show-movie', show.movie)">
         <font-awesome-icon icon="arrow-right"/>
       </button>
     </div>
@@ -42,7 +40,7 @@
 
 <script>
 import api from '@/api';
-import { simplify } from '@/utilities';
+import utilities from '@/utilities';
 
 export default {
   name: 'Show',
@@ -68,7 +66,7 @@ export default {
   computed: {
     isSearched() {
       if (this.searchText !== '') {
-        return simplify(this.show.movie.title).indexOf(this.searchText) !== -1;
+        return utilities.simplify(this.show.movie.title).indexOf(this.searchText) !== -1;
       }
       return true;
     },

@@ -6,12 +6,10 @@
     <nav class="navbar navbar-dark bg-dark">
       <div
         :class="{ hidden: $router.currentRoute.name === 'home' }"
-        class="navbar-text w-25"
-      >
+        class="navbar-text w-25">
         <router-link
           to="/"
-          class="btn btn-secondary"
-        >
+          class="btn btn-secondary">
           <span class="icon mr-1"><font-awesome-icon icon="undo"/></span>
           Wróć
         </router-link>
@@ -28,7 +26,7 @@
       </div>
     </nav>
 
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
@@ -46,8 +44,10 @@ export default {
   computed: {
     currentTimeString() {
       return {
-        date: moment(api.now).format('Do MMM'),
-        time: moment(api.now).format('H:mm'),
+        date: moment(api.now)
+          .format('Do MMM'),
+        time: moment(api.now)
+          .format('H:mm'),
       };
     },
   },
@@ -68,32 +68,4 @@ export default {
   min-height: 4.25rem;
   height: 4.25rem;
 }
-</style>
-
-<style>
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-#nprogress .bar {
-  height: 0.5rem;
-}
-
-#nprogress .spinner {
-  top: 5rem;
-  right: 1rem;
-}
-
-#nprogress .spinner-icon {
-  width: 2rem;
-  height: 2rem;
-}
-
 </style>

@@ -5,8 +5,7 @@
 
       <div
         v-show="api.state === api.SUCCESS"
-        class="alert alert-info"
-      >
+        class="alert alert-info">
         <span v-if="nextShow">
           Następny seans: <strong>{{ nextShow.movie.title }}</strong> {{ timeToNextShow }}
           <strong v-show="nextShow.theater === 1">w Małym kinie</strong>
@@ -14,15 +13,13 @@
       </div>
       <div
         v-show="api.state === api.PENDING"
-        class="alert alert-info"
-      >
+        class="alert alert-info">
         Trwa wczytywanie repertuaru kina... Przez ten czas będzie on niedostępny. Może to potrwać
         kilka sekund.
       </div>
       <div
         v-show="api.state === api.ERROR"
-        class="alert alert-warning"
-      >
+        class="alert alert-warning">
         Przepraszamy, <strong>repertuar kina</strong> jest obecnie niedostępny. Zachęcamy do
         skorzystania z pozostałych funkcji kiosku np. <em>Aktualności</em>.
         <span class="small">(błąd: {{ api.errorMsg }})</span>
@@ -31,10 +28,9 @@
       <div class="d-flex flex-row justify-content-center mt-5">
         <div class="mx-2">
           <img
-            src="../assets/pckisz-logo.png"
+            src="../assets/logo.png"
             class="img-thumbnail bg-light rounded"
-            alt="logo"
-          >
+            alt="logo">
         </div>
         <div class="align-self-center mx-2">
           <h4>Powiatowe Centrum</h4>
@@ -67,8 +63,7 @@
             <router-link to="/repertoire">
               <button
                 :disabled="api.state !== api.SUCCESS"
-                class="btn btn-lg btn-primary"
-              >
+                class="btn btn-lg btn-primary">
                 <span class="icon"><font-awesome-icon icon="film"/></span>
                 <br>
                 Repertuar Kina
@@ -174,7 +169,9 @@ export default {
     timeToNextShow() {
       if (this.nextShow) {
         if (this.isNextShowToday) {
-          return `o ${moment(this.nextShow.start).format('H:mm')} (${moment(this.api.now).to(this.nextShow.start)})`;
+          const absolute = moment(this.nextShow.start).format('H:mm');
+          const relative = moment(this.api.now).to(this.nextShow.start);
+          return `o ${absolute} (${relative})`;
         }
         if (this.isNextShowTomorrow) {
           return `jutro o ${moment(this.nextShow.start).format('H:mm')}`;
@@ -184,12 +181,12 @@ export default {
       return '';
     },
   },
-  mounted() {
-    NProgress.done();
-  },
   beforeRouteEnter(to, from, next) {
     NProgress.start();
     next();
+  },
+  mounted() {
+    NProgress.done();
   },
 };
 </script>

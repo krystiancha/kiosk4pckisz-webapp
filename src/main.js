@@ -1,46 +1,61 @@
 import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faCamera,
-  faFilm,
-  faHandshake,
-  faHourglassHalf,
-  faInfoCircle,
-  faNewspaper,
-  faPaintBrush,
-  faStar,
-  faGlobeAmericas,
-  faList,
-  faStopwatch,
   faArrowLeft,
   faArrowRight,
   faCalendar,
+  faCamera,
   faClock,
   faEnvelope,
+  faFilm,
+  faGlobeAmericas,
+  faHandshake,
+  faHourglassHalf,
+  faInfoCircle,
+  faList,
+  faNewspaper,
+  faPaintBrush,
   faSearch,
+  faStar,
+  faStopwatch,
+  faSync,
   faTimes,
   faUndo,
-  faSync,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import moment from 'moment';
 import IdleVue from 'idle-vue';
 import VueAnalytics from 'vue-analytics';
-import 'nprogress/nprogress.css';
 import App from './App.vue';
-import './main.scss';
 import router from './router';
+import './main.scss';
 
 library.add(
-  faCamera, faFilm, faHandshake, faHourglassHalf, faInfoCircle, faNewspaper, faPaintBrush, faStar,
-  faGlobeAmericas, faList, faStopwatch,
-  faArrowLeft, faArrowRight, faCalendar, faClock,
-  faEnvelope, faSearch, faTimes, faUndo, faSync,
+  faArrowLeft,
+  faArrowRight,
+  faCalendar,
+  faCamera,
+  faClock,
+  faEnvelope,
+  faFilm,
+  faGlobeAmericas,
+  faHandshake,
+  faHourglassHalf,
+  faInfoCircle,
+  faList,
+  faNewspaper,
+  faPaintBrush,
+  faSearch,
+  faStar,
+  faStopwatch,
+  faSync,
+  faTimes,
+  faUndo,
 );
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
-
 moment.locale('pl');
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(IdleVue, {
   eventEmitter: new Vue(),
