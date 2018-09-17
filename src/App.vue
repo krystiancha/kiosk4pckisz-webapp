@@ -51,6 +51,11 @@ export default {
       };
     },
   },
+  watch: {
+    'api.now': function apiNowWatcher() {
+      this.api.conditionalFetch();
+    },
+  },
   mounted() {
     this.api.startClock();
     this.api.fetch();

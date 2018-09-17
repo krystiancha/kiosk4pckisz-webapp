@@ -44,6 +44,7 @@ export default {
   PENDING: 0,
   SUCCESS: 1,
   ERROR: 2,
+  UPDATE_ERROR: 3,
   errorMsg: '',
   Show,
   Movie,
@@ -51,21 +52,65 @@ export default {
   movies: [],
   shows: [],
   now: new Date(),
+  lastUpdate: new Date(0),
+  updateTimes: [
+    new Date(0, 0, 0, 8, 0),
+    new Date(0, 0, 0, 12, 0),
+    new Date(0, 0, 0, 16, 0),
+  ],
   startClock() {
     setInterval(() => { this.now = new Date(); }, 60000);
+  },
+  isUpdateNeeded() {
+    const lastTime = new Date(
+      0, 0, 0,
+      this.lastUpdate.getHours(), this.lastUpdate.getMinutes(), this.lastUpdate.getSeconds(),
+    );
+    const currentTime = new Date(
+      0, 0, 0, this.now.getHours(), this.now.getMinutes(), this.now.getSeconds(),
+    );
+
+    let lastPosition = 0;
+    let currentPosition = 0;
+
+    this.updateTimes.forEach((time) => {
+      if (lastTime >= time) {
+        lastPosition += 1;
+      }
+      if (currentTime >= time) {
+        currentPosition += 1;
+      }
+    });
+
+    return lastPosition !== currentPosition;
+  },
+  conditionalFetch() {
+    if (this.isUpdateNeeded() && this.state === this.SUCCESS) {
+      this.fetch();
+    }
   },
   fetch() {
     axios.get()
       .then((response) => {
+        const oldState = this.state;
         this.state = this.SUCCESS;
+        this.lastUpdate = new Date();
         this.movies = response.data.movies.map(movie => Movie.fromJson(movie));
         this.shows = response.data.shows.map(show => Show.fromJson(show));
-        this.scheduleUpdates();
+        if (oldState === this.PENDING) {
+          this.scheduleUpdates();
+        }
       })
       .catch((error) => {
-        this.state = this.ERROR;
+        if (this.state === this.PENDING) {
+          this.state = this.ERROR;
+        } else if (this.state === this.SUCCESS) {
+          this.state = this.UPDATE_ERROR;
+        }
         this.errorMsg = error.message;
-        setTimeout(() => { this.fetch(); }, 10000);
+        if (this.state === this.ERROR) {
+          setTimeout(() => { this.fetch(); }, 10000);
+        }
       });
   },
   update() {
