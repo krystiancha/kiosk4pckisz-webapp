@@ -69,6 +69,7 @@ Vue.use(VueAnalytics, {
 
 Vue.prototype.$headHash = __COMMIT_HASH__;
 
+Vue.config.performance = true;
 Vue.config.productionTip = false;
 
 new Vue({
