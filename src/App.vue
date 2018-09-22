@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import dayjs from 'dayjs';
 import api from '@/api';
 
 export default {
@@ -44,10 +44,8 @@ export default {
   computed: {
     currentTimeString() {
       return {
-        date: moment(api.now)
-          .format('Do MMM'),
-        time: moment(api.now)
-          .format('H:mm'),
+        date: dayjs(api.now).format('D. MMM'),
+        time: dayjs(api.now).format('H:mm'),
       };
     },
   },

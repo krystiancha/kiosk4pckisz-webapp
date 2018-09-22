@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
@@ -23,12 +25,15 @@ import {
   faUndo,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import moment from 'moment';
 import IdleVue from 'idle-vue';
 import VueAnalytics from 'vue-analytics';
 import App from './App.vue';
 import router from './router';
+import './dayjsLocale';
 import './main.scss';
+
+dayjs.locale('pl');
+dayjs.extend(relativeTime);
 
 library.add(
   faArrowLeft,
@@ -52,8 +57,6 @@ library.add(
   faTimes,
   faUndo,
 );
-
-moment.locale('pl');
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

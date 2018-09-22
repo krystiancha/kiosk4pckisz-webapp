@@ -100,7 +100,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import NProgress from 'nprogress';
 import api from '@/api';
 import utilities from '@/utilities';
@@ -124,7 +123,7 @@ export default {
     lastShowTodayIndex() {
       let i = 0;
       this.api.shows.some((show) => {
-        if (moment(this.api.now).isSame(show.start, 'day')) {
+        if (utilities.isSameDay(this.api.now, show.start)) {
           i += 1;
           return false;
         }

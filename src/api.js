@@ -1,5 +1,6 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import axios from '@/axios';
+import utilities from './utilities';
 
 class Movie {
   static fromJson(obj) {
@@ -8,8 +9,7 @@ class Movie {
     ['id', 'title', 'description', 'poster', 'production', 'genre']
       .forEach((field) => { movie[field] = obj[field]; });
 
-    movie.duration = `${moment.duration(obj.duration)
-      .asMinutes()} min`;
+    movie.duration = `${utilities.minutes(obj.duration)} min`;
 
     return movie;
   }
@@ -32,10 +32,8 @@ class Show {
 
   static datef(date) {
     return {
-      time: moment(date)
-        .format('H:mm'),
-      date: moment(date)
-        .format('Do MMM'),
+      time: dayjs(date).format('H:mm'),
+      date: dayjs(date).format('D. MMM'),
     };
   }
 }

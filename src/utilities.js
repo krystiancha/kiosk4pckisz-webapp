@@ -23,6 +23,23 @@ const simplify = str => str
   })
   .join('');
 
+const isSameDay = (a, b) => a.getFullYear() === b.getFullYear()
+    && a.getMonth() === b.getMonth()
+    && a.getDate() === b.getDate();
+
+const minutes = (timeString) => {
+  const time = timeString.split(':');
+  if (time.length === 3 || time.length === 2) {
+    return +time[0] * 60 + +time[1];
+  }
+  if (time.length === 1) {
+    return +time[0];
+  }
+  return 0;
+};
+
 export default {
   simplify,
+  isSameDay,
+  minutes,
 };

@@ -139,9 +139,10 @@
 </template>
 
 <script>
-import moment from 'moment';
+import dayjs from 'dayjs';
 import NProgress from 'nprogress';
 import api from '@/api';
+import utilities from '@/utilities';
 
 export default {
   name: 'Home',
@@ -156,27 +157,34 @@ export default {
     },
     isNextShowToday() {
       if (this.nextShow) {
-        return moment(this.api.now).isSame(this.nextShow.start, 'day');
+        return utilities.isSameDay(this.api.now, this.nextShow.start);
       }
       return false;
     },
     isNextShowTomorrow() {
       if (this.nextShow) {
-        return moment(this.api.now).add(1, 'days').isSame(this.nextShow.start, 'day');
+        return utilities.isSameDay(
+          new Date(
+            this.api.now.getFullYear(),
+            this.api.now.getMonth(),
+            this.api.now.getDate() + 1,
+          ),
+          this.nextShow.start,
+        );
       }
       return false;
     },
     timeToNextShow() {
       if (this.nextShow) {
         if (this.isNextShowToday) {
-          const absolute = moment(this.nextShow.start).format('H:mm');
-          const relative = moment(this.api.now).to(this.nextShow.start);
+          const absolute = dayjs(this.nextShow.start).format('H:mm');
+          const relative = dayjs(this.api.now).to(this.nextShow.start);
           return `o ${absolute} (${relative})`;
         }
         if (this.isNextShowTomorrow) {
-          return `jutro o ${moment(this.nextShow.start).format('H:mm')}`;
+          return `jutro o ${dayjs(this.nextShow.start).format('H:mm')}`;
         }
-        return moment(this.nextShow.start).format('Do MMM o H:mm');
+        return dayjs(this.nextShow.start).format('D. MMM o H:mm');
       }
       return '';
     },
