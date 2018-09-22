@@ -114,15 +114,7 @@ export default {
   update() {
     const now = new Date();
 
-    let toRemove = 0;
-    this.shows.some((show) => {
-      if (show.end <= now) {
-        toRemove += 1;
-        return false;
-      }
-      return true;
-    });
-    this.shows.splice(0, toRemove);
+    this.shows = this.shows.filter(show => show.end > now);
 
     this.movies = this.movies.reduce((movies, movie) => {
       if (this.shows.find(show => show.movie.id === movie.id)) {
