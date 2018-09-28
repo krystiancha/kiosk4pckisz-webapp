@@ -52,7 +52,6 @@ export default {
   now: new Date(),
   lastUpdate: new Date(0),
   updateTimes: [
-    new Date(0, 0, 0, 8, 0),
     new Date(0, 0, 0, 12, 0),
     new Date(0, 0, 0, 16, 0),
   ],
